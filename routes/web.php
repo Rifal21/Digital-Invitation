@@ -27,7 +27,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/invitations/{invitation}/edit/content', [InvitationController::class, 'editContent'])->name('invitations.edit-content');
     Route::delete('/messages/{message}', [InvitationController::class, 'destroyMessage'])->name('messages.destroy');
     Route::post('/invitations/{invitation}/upload', [InvitationController::class, 'upload'])->name('invitations.upload');
-    Route::post('/invitations/{invitation}/save', [InvitationController::class, 'save'])->name('invitations.save');
+    Route::match(['post', 'patch'], '/invitations/{invitation}/save', [InvitationController::class, 'save'])->name('invitations.save');
 
     // Themes & Packages
     Route::get('/themes', [ThemeController::class, 'index'])->name('themes.index');
