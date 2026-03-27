@@ -1,73 +1,111 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Daftar Undangan Digital Saya') }}
-            </h2>
-            <a href="{{ route('invitations.create') }}" class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 focus:bg-indigo-700 active:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                + Buat Undangan Baru
-            </a>
-        </div>
-    </x-slot>
+    <div class="space-y-10" data-aos="fade-up">
+        <!-- Artisan Header Section -->
+        <header class="relative overflow-hidden p-10 md:p-16 rounded-[3rem] bg-[#4D243D] text-[#EDD4B2] shadow-2xl">
+            <div class="absolute -top-20 -right-20 w-80 h-80 bg-white/5 rounded-full blur-[80px]"></div>
+            <div class="absolute -bottom-20 -left-20 w-60 h-60 bg-[#EDD4B2]/5 rounded-full blur-[60px]"></div>
+            
+            <div class="relative z-10 flex flex-col md:flex-row justify-between items-center gap-10">
+                <div class="max-w-2xl text-center md:text-left">
+                    <span class="inline-flex items-center gap-4 py-2 px-6 mb-6 rounded-full border border-white/10 bg-white/5 text-[10px] font-black uppercase tracking-[0.6em] text-white/40">
+                        Memora By FKStudio
+                    </span>
+                    <h1 class="font-serif text-5xl md:text-7xl font-black mb-6 leading-tight tracking-tighter">
+                        Koleksi <br>
+                        <span class="italic text-white">Mahakarya</span>
+                    </h1>
+                    <p class="text-[11px] md:text-xs font-bold uppercase tracking-[0.4em] text-white/40 italic leading-loose max-w-xl">
+                        Daftar lengkap undangan digital eksklusif yang telah Anda rancang dalam ekosistem Memora By FKStudio.
+                    </p>
+                </div>
+                
+                <a href="{{ route('invitations.create') }}" class="group flex items-center justify-between gap-10 bg-[#EDD4B2] text-[#4D243D] px-12 py-7 rounded-[2.5rem] shadow-2xl hover:scale-105 active:scale-95 transition-all w-full md:w-auto">
+                    <span class="text-[11px] font-black uppercase tracking-[0.4em]">Buat Undangan Baru</span>
+                    <i class="fas fa-plus text-xs group-hover:rotate-180 transition-transform duration-700"></i>
+                </a>
+            </div>
+        </header>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <!-- Main Listing Exhibition -->
+        <main class="space-y-12">
             @if(session('success'))
-                <div class="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
-                    {{ session('success') }}
+                <div class="p-6 bg-[#EDD4B2]/10 border border-[#EDD4B2]/20 rounded-[2rem] flex items-center gap-4 text-[#4D243D]">
+                    <div class="w-10 h-10 bg-[#EDD4B2]/20 rounded-full flex items-center justify-center">
+                        <i class="fas fa-check text-xs"></i>
+                    </div>
+                    <span class="text-[10px] font-black uppercase tracking-widest">{{ session('success') }}</span>
                 </div>
             @endif
 
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
-                @if($invitations->isEmpty())
-                    <div class="text-center py-12">
-                        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                        </svg>
-                        <h3 class="mt-2 text-sm font-medium text-gray-900">Belum ada undangan</h3>
-                        <p class="mt-1 text-sm text-gray-500">Mulai buat undangan digital pertama Anda hari ini.</p>
-                        <div class="mt-6">
-                            <a href="{{ route('invitations.create') }}" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                Buat Undangan
-                            </a>
-                        </div>
+            @if($invitations->isEmpty())
+                <div class="bg-white p-32 rounded-[4rem] text-center border border-dashed border-slate-200 shadow-sm" data-aos="fade-up">
+                    <div class="w-24 h-24 bg-[#4D243D]/5 rounded-full flex items-center justify-center text-[#4D243D] mx-auto mb-10 border border-[#4D243D]/5">
+                        <i class="fas fa-feather-pointed text-4xl opacity-20"></i>
                     </div>
-                @else
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        @foreach($invitations as $invitation)
-                            <div class="border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition bg-gray-50">
-                                <div class="h-3 bg-indigo-500" style="background-color: {{ $invitation->theme_color }}"></div>
-                                <div class="p-5">
-                                    <h4 class="font-bold text-lg text-gray-800 mb-1">{{ $invitation->title }}</h4>
-                                    <p class="text-sm text-gray-600 mb-4">{{ $invitation->groom_name }} & {{ $invitation->bride_name }}</p>
-                                    <div class="text-xs text-gray-500 mb-4 space-y-1">
-                                        <p>📅 {{ \Carbon\Carbon::parse($invitation->event_date)->format('d M Y') }}</p>
-                                        <p>🔗 /undangan/{{ $invitation->slug }}</p>
-                                        <div class="mt-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800 uppercase tracking-tighter">
-                                            Template: {{ $invitation->theme ?? 'Modern' }}
-                                        </div>
-                                    </div>
-                                    <div class="flex gap-2">
-                                        <a href="{{ route('invitations.show', $invitation) }}" target="_blank" class="flex-1 text-center py-2 px-3 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
-                                            Lihat
-                                        </a>
-                                        <a href="{{ route('invitations.edit', $invitation) }}" class="flex-1 text-center py-2 px-3 bg-indigo-50 border border-transparent rounded-md text-sm font-medium text-indigo-700 hover:bg-indigo-100">
-                                            Edit
-                                        </a>
-                                        <form action="{{ route('invitations.destroy', $invitation) }}" method="POST" class="inline">
+                    <h3 class="font-serif text-3xl font-black text-[#4D243D] mb-4 italic leading-tight">Mulai Kisah Kreatif Anda</h3>
+                    <p class="text-slate-400 text-sm mb-12 max-w-sm mx-auto">Anda belum memiliki undangan digital yang aktif. Klik tombol di bawah untuk mulai merancang mahakarya pertama Anda.</p>
+                    <a href="{{ route('invitations.create') }}" class="inline-flex items-center gap-6 bg-[#4D243D] text-[#EDD4B2] px-12 py-6 rounded-full shadow-2xl hover:scale-105 transition-all text-[10px] font-black uppercase tracking-[0.5em]">
+                        Rancang Sekarang
+                    </a>
+                </div>
+            @else
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+                    @foreach($invitations as $invitation)
+                        <div class="group bg-white p-10 rounded-[3.5rem] border border-slate-100 shadow-[0_20px_60px_rgba(77,36,61,0.03)] hover:shadow-[0_40px_100px_rgba(77,36,61,0.12)] hover:border-[#EDD4B2]/40 transition duration-1000 relative overflow-hidden" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
+                             <div class="absolute top-0 right-0 w-40 h-40 bg-slate-50 rounded-full -mr-20 -mt-20 opacity-50 group-hover:bg-[#EDD4B2]/10 group-hover:scale-125 transition duration-1000"></div>
+                             
+                             <div class="relative z-10 flex flex-col h-full">
+                                 <!-- Category Tag -->
+                                 <div class="flex justify-between items-center mb-10">
+                                     <div class="flex items-center gap-3">
+                                         <div class="w-3 h-3 rounded-full" style="background-color: {{ $invitation->theme_color ?? '#EDD4B2' }}"></div>
+                                         <span class="text-[9px] font-black uppercase tracking-[0.3em] text-[#4D243D]/30">{{ $invitation->theme ?? 'Modern' }} Signature</span>
+                                     </div>
+                                     <div class="px-4 py-1.5 rounded-full border border-slate-100 bg-slate-50 text-slate-400 text-[8px] font-black uppercase tracking-widest italic group-hover:bg-[#EDD4B2]/20 group-hover:text-[#4D243D] transition">
+                                         Standard
+                                     </div>
+                                 </div>
+
+                                 <!-- Content -->
+                                 <div class="flex-1 mb-12">
+                                     <h4 class="font-bold text-3xl text-[#4D243D] mb-2 tracking-tighter leading-tight group-hover:text-[#EDD4B2] transition duration-700">{{ $invitation->title }}</h4>
+                                     <p class="text-[11px] font-bold uppercase tracking-[0.4em] text-slate-300 italic mb-10">{{ $invitation->groom_name }} & {{ $invitation->bride_name }}</p>
+                                     
+                                     <div class="space-y-4">
+                                         <div class="flex items-center gap-4 text-slate-400">
+                                             <i class="far fa-calendar-check text-sm opacity-30"></i>
+                                             <span class="text-[10px] font-bold uppercase tracking-widest">{{ \Carbon\Carbon::parse($invitation->event_date)->translatedFormat('d F Y') }}</span>
+                                         </div>
+                                         <div class="flex items-center gap-4 text-slate-400">
+                                             <i class="fas fa-link text-sm opacity-30"></i>
+                                             <span class="text-[10px] font-bold lowercase tracking-wider opacity-60">/v/{{ $invitation->slug }}</span>
+                                         </div>
+                                     </div>
+                                 </div>
+
+                                 <!-- Action Interface -->
+                                 <div class="flex items-center gap-3 border-t border-slate-50 pt-8 mt-auto">
+                                     <a href="{{ route('invitations.edit', $invitation) }}" class="flex-1 text-center py-5 bg-[#4D243D] text-[#EDD4B2] rounded-[1.8rem] text-[10px] font-black uppercase tracking-widest shadow-2xl hover:scale-105 active:scale-95 transition-all duration-500">
+                                         Edit Creation
+                                     </a>
+                                     <div class="flex gap-2 shrink-0">
+                                         <a href="{{ route('invitations.show', $invitation->slug) }}" target="_blank" class="w-14 h-14 flex items-center justify-center rounded-[1.5rem] bg-slate-50 text-slate-400 hover:bg-[#EDD4B2] hover:text-[#4D243D] transition duration-700 shadow-inner">
+                                             <i class="fas fa-external-link-alt text-[11px]"></i>
+                                         </a>
+                                         <form action="{{ route('invitations.destroy', $invitation) }}" method="POST" class="inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" @click="confirmAction(event, 'Hapus Undangan Ini?')" class="p-2 text-red-600 hover:bg-red-50 rounded-md">
-                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                                            <button type="submit" @click="confirmAction(event, 'Apakah Anda yakin ingin menghapus mahakarya ini secara permanen?')" class="w-14 h-14 flex items-center justify-center rounded-[1.5rem] bg-red-50 text-red-300 hover:bg-red-500 hover:text-white transition duration-700">
+                                                <i class="fas fa-trash-alt text-[11px]"></i>
                                             </button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                @endif
-            </div>
-        </div>
+                                         </form>
+                                     </div>
+                                 </div>
+                             </div>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+        </main>
     </div>
 </x-app-layout>

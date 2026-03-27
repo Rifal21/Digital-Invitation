@@ -1,105 +1,408 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data="{ darkMode: true, mobileMenu: false, scrolled: false }"
+    @scroll.window="scrolled = (window.pageYOffset > 20)" :class="{ 'dark': darkMode }">
+
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Amora - Undangan Digital Eksklusif</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <title>Memora - Undangan Digital & Buku Tamu Eksklusif (FKStudio)</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Swiper & Fonts -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Montserrat:wght@100;300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
     <style>
-        body { font-family: 'Montserrat', sans-serif; background-color: #ECDCC9; }
-        .font-serif { font-family: 'Cormorant Garamond', serif; }
-        .bg-amora-dark { background-color: #4D243D; }
-        .text-amora-dark { color: #4D243D; }
-        .bg-amora-tan { background-color: #D0A98F; }
-        .text-amora-tan { color: #D0A98F; }
-        .bg-amora-wheat { background-color: #EDD4B2; }
-        .border-amora-tan { border-color: #D0A98F; }
-        
+        :root {
+            --amora-bg: #FDFCFB;
+            --amora-text: #0F172A;
+            --amora-gold: #C5A267;
+            --nav-bg: rgba(253, 252, 251, 0.85);
+            --hero-overlay: rgba(253, 252, 251, 0.55);
+        }
+
+        .dark {
+            --amora-bg: #0F172A;
+            --amora-text: #F8FAFC;
+            --amora-gold: #C5A267;
+            --nav-bg: rgba(15, 23, 42, 0.88);
+            --hero-overlay: rgba(15, 23, 42, 0.75);
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--amora-bg);
+            color: var(--amora-text);
+            overflow-x: hidden;
+            transition: background-color 0.8s ease;
+        }
+
         .hero-section {
-            background-image: linear-gradient(to bottom, rgba(236, 220, 201, 0.7), rgba(236, 220, 201, 0.9)), url('/images/hero-bg.png');
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 5rem;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 5;
+            background: var(--hero-overlay);
+            transition: background 0.8s ease;
+        }
+
+        .hero-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            px: 2rem;
+            position: relative;
+            z-index: 10;
+            padding: 2rem;
+        }
+
+        .hero-slider {
+            width: 100%;
+            height: 100%;
+        }
+
+        .hero-slide {
+            width: 100%;
+            height: 100%;
             background-size: cover;
             background-position: center;
         }
+
+        .glass-nav {
+            background: var(--nav-bg);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.6s ease;
+        }
+
+        .elite-btn {
+            padding: 0.8rem 2.2rem;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5em;
+            border-radius: 9999px;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--amora-gold);
+        }
+
+        .elite-btn-solid {
+            background-color: var(--amora-gold);
+            color: var(--amora-bg);
+        }
+
+        .elite-btn-solid:hover {
+            background-color: var(--amora-text);
+            border-color: var(--amora-text);
+            transform: translateY(-5px);
+        }
+
+        .elite-btn-outline {
+            background-color: transparent;
+            color: var(--amora-text);
+            border: 1px solid rgba(197, 162, 103, 0.4);
+        }
+
+        .elite-btn-outline:hover {
+            border-color: var(--amora-gold);
+            transform: translateY(-5px);
+        }
+
+        .font-serif {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .shimmer-text {
+            background: linear-gradient(90deg, var(--amora-text), var(--amora-gold), var(--amora-text));
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textShimmer 5s linear infinite;
+        }
+
+        @keyframes textShimmer {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        .toggle-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--amora-gold);
+            background: var(--amora-bg);
+        }
+
+        [x-cloak] {
+            display: none !important;
+        }
     </style>
 </head>
-<body class="antialiased text-[#4D243D] selection:bg-amora-tan selection:text-white">
 
-    <div class="relative min-h-screen">
-        <!-- Navigation -->
-        <nav class="absolute top-0 left-0 right-0 p-10 flex justify-between items-center z-50">
-            <div class="flex items-center gap-3">
-                <div class="w-12 h-12 bg-amora-dark rounded-full flex items-center justify-center text-[#EDD4B2] shadow-2xl border border-white/10">
-                    <span class="font-serif text-2xl font-bold">A</span>
-                </div>
-                <div class="text-3xl font-serif font-bold tracking-widest uppercase text-amora-dark">Amora</div>
-            </div>
-            <div class="hidden md:flex space-x-8 items-center">
-                @if (Route::has('login'))
-                    @auth
-                        <a href="{{ url('/dashboard') }}" class="text-xs font-semibold uppercase tracking-widest hover:text-amora-tan transition">Dashboard</a>
-                    @else
-                        <a href="{{ route('login') }}" class="text-xs font-semibold uppercase tracking-widest hover:text-amora-tan transition">Masuk</a>
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="px-8 py-3 bg-amora-dark text-[#EDD4B2] text-[10px] font-bold uppercase tracking-[0.2em] rounded-full hover:scale-105 transition shadow-xl">Daftar Sekarang</a>
-                        @endif
-                    @endauth
-                @endif
-            </div>
-        </nav>
+<body class="antialiased selection:bg-amora-gold selection:text-white overflow-x-hidden"
+    :class="{ 'overflow-hidden': mobileMenu }">
 
-        <!-- Hero Section -->
-        <main class="hero-section flex items-center justify-center min-h-screen px-6 py-24 relative overflow-hidden">
-            <div class="max-w-5xl mx-auto text-center relative z-10 transition-all duration-1000">
-                <div class="inline-block py-1 px-4 mb-8 text-[10px] font-bold tracking-[0.4em] text-amora-dark uppercase border-b border-amora-dark animate-pulse">
-                    Seni Merayakan Kebahagiaan
+    @php
+        $sliders = \App\Models\LandingSlider::where('is_active', true)->orderBy('sort_order')->get();
+        if ($sliders->isEmpty()) {
+            $sliders = collect([
+                (object) ['image_path' => 'images/hero-bg.png'],
+                (object) ['image_path' => 'images/slider-2-sage.png'],
+                (object) ['image_path' => 'images/slider-3-royal.png'],
+            ]);
+        }
+    @endphp
+
+    <!-- 💍 Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-[300] h-20 md:h-24 glass-nav flex justify-between items-center px-6 md:px-20 transition-all duration-700"
+        :class="{ 'py-3': scrolled || mobileMenu }">
+        <a href="/" class="flex items-center gap-4 group">
+            <div class="hover:rotate-[180deg] transition-transform duration-1000">
+                <span class="font-serif text-2xl font-black italic text-amora-gold">M.</span>
+            </div>
+            <div class="hidden sm:block">
+                <span
+                    class="text-lg md:text-xl font-serif font-black tracking-widest uppercase leading-none block">Memora</span>
+                <p class="text-[7px] font-black tracking-[0.4em] text-gold uppercase mt-1">by FKStudio</p>
+            </div>
+        </a>
+
+        <div class="flex items-center gap-4">
+            <button @click="darkMode = !darkMode" class="flex text-sm opacity-90 hover:opacity-100 transition">
+                <i class="fas" :class="darkMode ? 'fa-sun' : 'fa-moon'"></i>
+            </button>
+            @auth
+                <a href="{{ route('dashboard') }}" class="elite-btn elite-btn-solid !px-6 !py-3">Dashboard</a>
+            @else
+                <a href="{{ route('login') }}"
+                    class="hidden md:block text-[9px] font-black uppercase tracking-[0.4em] text-main opacity-90 hover:opacity-100 transition">Masuk</a>
+                <a href="{{ route('register') }}"
+                    class="hidden lg:block elite-btn elite-btn-solid !px-6 !py-3">Bergabung</a>
+            @endauth
+            <button @click="mobileMenu = !mobileMenu" class="toggle-btn flex lg:hidden relative z-[400]">
+                <i class="fas" :class="mobileMenu ? 'fa-times' : 'fa-bars'"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 🎪 High-Stability Pro Hero Master -->
+    <header class="hero-section">
+        <!-- 🎬 Background Layer -->
+        <div class="hero-bg">
+            <div class="hero-slider swiper swiper-hero">
+                <div class="swiper-wrapper">
+                    @foreach ($sliders as $slider)
+                        <div class="swiper-slide hero-slide"
+                            style="background-image: url('{{ asset($slider->image_path) }}')"></div>
+                    @endforeach
                 </div>
-                
-                <h1 class="font-serif text-6xl md:text-[9.2rem] leading-[0.85] mb-12 tracking-tighter text-amora-dark">
-                    Abadikan <br>
-                    <span class="italic font-light opacity-80">Kisah</span> <br>
-                    Cinta Anda.
+            </div>
+        </div>
+
+        <!-- 📝 Content Wording -->
+        <div class="hero-container">
+            <div class="max-w-4xl mx-auto text-center" data-aos="fade-up">
+                <div
+                    class="inline-flex items-center gap-4 py-2 px-6 mb-8 rounded-full border border-gold/10 bg-gold/5 text-[9px] font-black uppercase tracking-[0.8em] text-gold mx-auto">
+                    <span class="h-1 w-1 rounded-full bg-gold animate-ping"></span>
+                    Memora by FKStudio
+                </div>
+
+                <h1 class="font-serif text-5xl md:text-8xl font-black leading-tight tracking-tighter mb-10 text-main">
+                    Setiap Janji adalah <span class="italic shimmer-text font-medium">Abadi,</span> <br>
+                    Setiap Momen <span class="shimmer-text italic">Layak Dikenang.</span>
                 </h1>
-                
-                <p class="text-lg text-[#4D243D] mb-16 max-w-xl mx-auto leading-relaxed font-semibold tracking-wide uppercase text-[10px] bg-white/30 backdrop-blur-sm p-4 rounded-lg inline-block">
-                    Undangan Digital Eksklusif untuk momen yang Tak Terlupakan. <br> Dirancang dengan kemewahan, dibagikan dengan penuh kasih.
+
+                <p
+                    class="max-w-xl mx-auto text-muted text-base md:text-xl font-light italic leading-loose mb-14 opacity-80">
+                    Dari undangan hingga jejak kehadiran, <span class="text-main font-bold">Memora</span> merangkai
+                    kenangan dalam pengalaman digital yang indah dan bermakna.
                 </p>
-                
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-10">
-                    <a href="{{ route('register') }}" class="w-full sm:w-auto px-16 py-6 bg-amora-dark text-[#EDD4B2] rounded-full font-bold text-xs uppercase tracking-[0.3em] shadow-[0_20px_50px_rgba(77,36,61,0.3)] hover:-translate-y-2 transition-all">
-                        Buat Sekarang
-                    </a>
-                    <a href="#explore" class="group flex items-center gap-4 text-amora-dark font-bold uppercase text-[9px] tracking-[0.4em] hover:opacity-70 transition">
-                        Jelajahi Galeri
-                        <div class="w-10 h-px bg-amora-dark group-hover:w-16 transition-all"></div>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-8">
+                    <a href="{{ route('register') }}"
+                        class="elite-btn elite-btn-solid !px-12 !py-6 w-full sm:w-auto">Buat Undangan</a>
+                    <a href="{{ route('themes.index') }}"
+                        class="group flex items-center gap-5 elite-btn elite-btn-outline !px-10 !py-6 w-full sm:w-auto">
+                        Lihat Tema
+                        {{-- <div class="w-6 h-[1px] bg-gold group-hover:w-12 transition-all duration-700"></div> --}}
                     </a>
                 </div>
+            </div>
+        </div>
+    </header>
 
-                <!-- Stats with glassmorphism for legibility -->
-                <div class="mt-32 grid grid-cols-1 md:grid-cols-3 gap-20 border-t border-amora-dark/10 pt-16">
-                    <div class="text-center group p-6 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-sm">
-                        <div class="font-serif text-4xl group-hover:scale-110 transition">1.500+</div>
-                        <div class="text-[9px] font-bold uppercase tracking-[0.3em] mt-3 opacity-60">Kisah Berbagi</div>
+    <!-- 📱 Mobile Menu Dropdown -->
+    <div x-show="mobileMenu" x-transition x-cloak
+        class="fixed inset-0 z-[250] bg-var(--amora-bg) flex flex-col pt-32 px-10" style="background: var(--amora-bg)">
+        <div class="space-y-10">
+            <a @click="mobileMenu = false" href="#features" class="block font-serif text-[3.5rem] italic text-main">The
+                Craft</a>
+            <a @click="mobileMenu = false" href="{{ route('themes.index') }}"
+                class="block font-serif text-[3.5rem] italic text-main">Gallery</a>
+            <a @click="mobileMenu = false" href="{{ route('packages.index') }}"
+                class="block font-serif text-[3.5rem] italic text-gold">Packages</a>
+        </div>
+        <div class="mt-auto pb-16">
+            <a href="{{ route('register') }}" class="elite-btn elite-btn-solid w-full py-6">Apply Now</a>
+        </div>
+    </div>
+
+    <!-- 🏺 Specialized Services -->
+    <section id="features" class="py-32 relative overflow-hidden bg-transparent z-10 border-t border-white/5">
+        <div class="max-w-6xl mx-auto px-10 relative z-10">
+            <div class="max-w-3xl mb-24 text-center md:text-left" data-aos="fade-up">
+                <span class="text-gold font-black uppercase tracking-[1em] text-[10px] block mb-6">Expertise</span>
+                <h2 class="font-serif text-5xl md:text-7xl font-black leading-none text-main uppercase">Layanan <br>
+                    <span class="italic opacity-10">Paling Sakral.</span>
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-16">
+                <div class="flex flex-col text-center md:text-left" data-aos="fade-up">
+                    <div
+                        class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center text-gold text-xl mb-10 border border-white/10 mx-auto md:mx-0">
+                        <i class="fas fa-magic"></i>
                     </div>
-                    <div class="text-center group p-6 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-sm">
-                        <div class="font-serif text-4xl group-hover:scale-110 transition">99.8%</div>
-                        <div class="text-[9px] font-bold uppercase tracking-[0.3em] mt-3 opacity-60">Tingkat Kepuasan</div>
+                    <h3 class="font-serif text-3xl mb-6 text-main">Digital Invitation</h3>
+                    <p class="text-muted text-sm leading-loose font-medium italic opacity-60">Visual artisan kelas dunia
+                        untuk menyebarkan kabar bahagia dengan kemewahan mutlak.</p>
+                </div>
+                <div class="flex flex-col text-center md:text-left" data-aos="fade-up" data-aos-delay="200">
+                    <div
+                        class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center text-gold text-xl mb-10 border border-white/10 mx-auto md:mx-0">
+                        <i class="fas fa-gem"></i>
                     </div>
-                    <div class="text-center group p-6 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-sm">
-                        <div class="font-serif text-4xl group-hover:scale-110 transition">Alami</div>
-                        <div class="text-[9px] font-bold uppercase tracking-[0.3em] mt-3 opacity-60">Nuansa Estetika</div>
+                    <h3 class="font-serif text-3xl mb-6 text-main">Smart Guest Book</h3>
+                    <p class="text-muted text-sm leading-loose font-medium italic opacity-60">Manajemen tamu digital
+                        terintegrasi yang memastikan resepsi Anda berlangsung sempurna.</p>
+                </div>
+                <div class="flex flex-col text-center md:text-left" data-aos="fade-up" data-aos-delay="300">
+                    <div
+                        class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center text-gold text-xl mb-10 border border-white/10 mx-auto md:mx-0">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <h3 class="font-serif text-3xl mb-6 text-main">Elite RSVP</h3>
+                    <p class="text-muted text-sm leading-loose font-medium italic opacity-60">Sistem reservasi
+                        intelijen yang memberikan kepastian jumlah tamu dengan presisi tinggi.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 🏺 Themes Gallery (Refined Layout) -->
+    <section class="py-48 relative z-10">
+        <div class="max-w-6xl mx-auto px-10">
+            <div class="flex flex-col lg:flex-row justify-between items-end mb-32 gap-12 text-center lg:text-left"
+                data-aos="fade-up">
+                <div class="max-w-3xl">
+                    <span class="text-gold font-black uppercase tracking-[1em] text-[11px] block mb-8">The
+                        Collection</span>
+                    <h2
+                        class="font-serif text-5xl md:text-8xl font-black text-main leading-none uppercase tracking-tighter">
+                        Mahakarya.</h2>
+                </div>
+                <a href="{{ route('themes.index') }}"
+                    class="elite-btn elite-btn-solid !px-12 !py-5 mx-auto lg:mx-0">Explore Hall</a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+                <div class="group relative aspect-[4/5] rounded-[2rem] overflow-hidden" data-aos="zoom-in">
+                    <div
+                        class="absolute inset-0 bg-slate-950 flex flex-col items-center justify-center p-12 text-center group-hover:scale-105 transition duration-1000">
+                        <h4 class="font-serif text-4xl md:text-6xl italic text-gold mb-8">Serenity</h4>
+                        <p class="text-[9px] font-black uppercase tracking-[0.8em] text-white opacity-20">Noir Studio
+                        </p>
+                    </div>
+                </div>
+                <div class="group relative aspect-[4/5] rounded-[2rem] overflow-hidden" data-aos="zoom-in"
+                    data-aos-delay="200">
+                    <div
+                        class="absolute inset-0 bg-[#FDFCFB] flex flex-col items-center justify-center p-12 text-center group-hover:scale-105 transition duration-1000">
+                        <h4 class="font-serif text-4xl md:text-6xl italic text-black mb-8 font-black uppercase">Sage
+                        </h4>
+                        <p class="text-[9px] font-black uppercase tracking-[0.8em] text-black opacity-20 italic">FK
+                            Botanical</p>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <!-- Background Decoration -->
-            <div class="absolute top-[20%] right-[-5%] w-96 h-96 bg-amora-dark/5 rounded-full blur-3xl"></div>
-            <div class="absolute bottom-[10%] left-[-5%] w-80 h-80 bg-amora-tan/20 rounded-full blur-3xl"></div>
-        </main>
+    <!-- 🏺 Footer -->
+    <footer class="py-32 border-t border-white/5 relative z-10 text-center">
+        <div class="max-w-6xl mx-auto px-10">
+            <a href="/" class="font-serif text-4xl font-black italic text-amora-gold mb-16 block">M.</a>
+            <p class="text-muted text-lg italic leading-loose max-w-2xl mx-auto font-medium opacity-50 mb-16">
+                Mengabadikan sakralitas janji suci melalui Kurasi Undangan Digital & Buku Tamu Digital Eksklusif oleh
+                FKStudio.</p>
 
-        <footer class="py-16 text-center text-amora-dark/30 text-[9px] font-bold uppercase tracking-[0.5em] bg-[#ECDCC9]">
-            <p>© 2026 Amora Studio. Kemewahan Murni.</p>
-        </footer>
-    </div>
+            <div
+                class="grid grid-cols-1 md:grid-cols-3 gap-16 mb-24 font-black text-[9px] tracking-[0.6em] uppercase opacity-40">
+                <a href="{{ route('themes.index') }}" class="hover:text-gold transition">Gallery</a>
+                <a href="{{ route('packages.index') }}" class="hover:text-gold transition">Packages</a>
+                <a href="#" class="hover:text-gold transition">Connect</a>
+            </div>
+
+            <div class="pt-16 border-t border-white/5">
+                <p class="text-white/10 text-[9px] font-black uppercase tracking-[1em] italic">© 2026 Memora by
+                    FKStudio.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1600,
+            once: true,
+            offset: 50,
+            easing: 'ease-out-expo'
+        });
+
+        const swiperHero = new Swiper('.swiper-hero', {
+            loop: true,
+            effect: 'fade',
+            speed: 3500,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false
+            },
+        });
+    </script>
 </body>
+
 </html>

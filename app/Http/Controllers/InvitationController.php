@@ -54,7 +54,7 @@ class InvitationController extends Controller
         return redirect()->route('invitations.edit', $invitation)->with('success', 'Undangan berhasil dibuat! Silakan mulai kustomisasi.');
     }
 
-    public function editor(Invitation $invitation)
+    public function edit(Invitation $invitation)
     {
         if ($invitation->user_id !== \Illuminate\Support\Facades\Auth::id()) {
             abort(403);
@@ -202,7 +202,15 @@ class InvitationController extends Controller
             'guest_count' => 'integer|min:1|max:10',
         ]);
 
-        $invitation->messages()->create($validated);
+        $message = $invitation->messages()->create($validated);
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Pesan dikirim!',
+                'data' => $message
+            ]);
+        }
 
         return back()->with('success', 'Pesan Anda telah terkirim!');
     }
