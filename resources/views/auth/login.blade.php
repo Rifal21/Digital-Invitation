@@ -3,8 +3,8 @@
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
     <div class="mb-10 text-center">
-        <h2 class="font-serif text-3xl font-bold tracking-widest uppercase text-[#4D243D]">Masuk ke Amora</h2>
-        <p class="text-xs text-gray-500 mt-2 uppercase tracking-[0.2em] font-medium">Lanjutkan Kisah Kebahagiaan Anda</p>
+        <h2 class="font-serif text-3xl font-bold tracking-widest uppercase text-[#4D243D]">Masuk ke Memora</h2>
+        <p class="text-xs text-gray-500 mt-2 uppercase tracking-[0.2em] font-medium">By FKStudio</p>
     </div>
 
     <form method="POST" action="{{ route('login') }}" class="space-y-6">
@@ -48,7 +48,7 @@
             
             <p class="text-center text-[10px] font-bold uppercase tracking-widest text-gray-400 mt-4">
                 Belum punya akun? 
-                <a href="{{ route('register') }}" class="text-[#4D243D] hover:underline transition ml-1">Daftar Amora</a>
+                <a href="{{ route('register') }}" class="text-[#4D243D] hover:underline transition ml-1">Daftar Memora</a>
             </p>
         </div>
     </form>

@@ -10,11 +10,11 @@
     <!-- Logo Section -->
     <div class="p-5 flex items-center gap-4 border-b border-white/5 mb-6 overflow-hidden min-h-[100px]">
         <div class="w-10 h-10 bg-[#EDD4B2] rounded-xl flex shrink-0 items-center justify-center text-[#4D243D] shadow-2xl transition-transform hover:rotate-12 duration-500">
-            <span class="font-bold text-xl font-serif">A</span>
+            <span class="font-bold text-xl font-serif">M</span>
         </div>
         <div x-show="sidebarOpen || mobileMenuOpen" x-transition:enter="transition ease-out duration-300 transform opacity-0 -translate-x-4" x-transition:enter-end="opacity-100 translate-x-0" class="flex-1">
-            <h2 class="text-lg font-bold font-serif text-[#EDD4B2] tracking-tighter uppercase leading-none whitespace-nowrap">Amora</h2>
-            <p class="text-[8px] font-black tracking-[0.3em] uppercase text-white/30 mt-1 whitespace-nowrap">Platform Inc.</p>
+            <h2 class="text-lg font-bold font-serif text-[#EDD4B2] tracking-tighter uppercase leading-none whitespace-nowrap">Memora</h2>
+            <p class="text-[8px] font-black tracking-[0.3em] uppercase text-white/30 mt-1 whitespace-nowrap">By FKStudio</p>
         </div>
         <!-- Close Mobile btn -->
         <button @click="mobileMenuOpen = false" class="ml-auto text-white/40 hover:text-white md:hidden">
@@ -159,7 +159,7 @@
     <!-- Sidebar Footer -->
     <div class="px-8 pb-8 pt-4 overflow-hidden" x-show="sidebarOpen || mobileMenuOpen">
         <div class="bg-white/5 p-5 rounded-2xl border border-white/5 group hover:border-[#EDD4B2]/20 transition duration-700">
-            <h4 class="text-[#EDD4B2] font-black text-[9px] uppercase tracking-widest mb-1.5">Amora Pro v.1.2</h4>
+            <h4 class="text-[#EDD4B2] font-black text-[9px] uppercase tracking-widest mb-1.5">Memora Pro v.1.2</h4>
             <p class="text-[8px] text-white/20 font-bold uppercase leading-relaxed italic">The most sophisticated invitation system.</p>
         </div>
     </div>

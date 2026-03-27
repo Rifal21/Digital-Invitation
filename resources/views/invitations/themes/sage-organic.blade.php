@@ -729,20 +729,21 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
                     <!-- RSVP Form -->
                     <div class="glass-card p-10 rounded-[3rem] shadow-xl border-white" data-aos="fade-right">
-                        <form action="{{ route('invitations.message', $invitation) }}" method="POST"
-                            class="space-y-6">
+                        <form @submit.prevent="submitMessage" class="space-y-6">
                             @csrf
+                            <div x-show="messageStatus" x-transition class="p-4 rounded-2xl bg-sage-green/10 text-sage-green text-[10px] font-black uppercase tracking-widest text-center" x-text="messageStatus"></div>
+                            
                             <div>
                                 <label
                                     class="block text-[8px] font-black uppercase tracking-widest text-sage-green/60 mb-3">Nama
                                     Tamu</label>
-                                <input type="text" name="name" required placeholder="Masukkan nama Anda"
+                                <input type="text" x-model="newMessage.name" required placeholder="Masukkan nama Anda"
                                     class="w-full bg-white/50 border-none rounded-2xl px-6 py-4 text-sm focus:ring-2 focus:ring-sage-green/20">
                             </div>
                             <div>
                                 <label
                                     class="block text-[8px] font-black uppercase tracking-widest text-sage-green/60 mb-3">Kehadiran</label>
-                                <select name="is_attending"
+                                <select x-model="newMessage.is_attending"
                                     class="w-full bg-white/50 border-none rounded-2xl px-6 py-4 text-sm focus:ring-2 focus:ring-sage-green/20">
                                     <option value="1">Akan Hadir</option>
                                     <option value="0">Maaf, Tidak Bisa Hadir</option>
@@ -752,19 +753,20 @@
                                 <label
                                     class="block text-[8px] font-black uppercase tracking-widest text-sage-green/60 mb-3">Pesan
                                     & Doa Restu</label>
-                                <textarea name="message" required rows="4" placeholder="Tulis ucapan doa Anda..."
+                                <textarea x-model="newMessage.message" required rows="4" placeholder="Tulis ucapan doa Anda..."
                                     class="w-full bg-white/50 border-none rounded-2xl px-6 py-4 text-sm focus:ring-2 focus:ring-sage-green/20"></textarea>
                             </div>
-                            <button type="submit"
-                                class="w-full bg-sage-green text-white py-5 rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-xl hover:scale-105 transition-all">
-                                Kirim Pesan
+                            <button type="submit" :disabled="isSending"
+                                class="w-full bg-sage-green text-white py-5 rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-xl hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+                                <span x-show="!isSending">Kirim Pesan</span>
+                                <span x-show="isSending"><i class="fas fa-spinner fa-spin mr-2"></i>Mengirim...</span>
                             </button>
                         </form>
                     </div>
 
                     <!-- Guestbook Feed -->
                     <div class="space-y-6 max-h-[600px] overflow-y-auto custom-scrollbar pr-4" data-aos="fade-left">
-                        @foreach ($messages as $msg)
+                        <template x-for="msg in messages" :key="msg.id">
                             <div
                                 class="glass-card p-8 rounded-[2rem] border-white/40 shadow-sm relative overflow-hidden group">
                                 <div class="absolute top-0 right-0 p-4 opacity-10 flex gap-1">
@@ -773,22 +775,17 @@
                                 </div>
                                 <div class="flex items-center gap-4 mb-4">
                                     <div
-                                        class="w-10 h-10 rounded-full bg-sage-green text-white flex items-center justify-center font-bold text-xs">
-                                        {{ substr($msg->name, 0, 1) }}
+                                        class="w-10 h-10 rounded-full bg-sage-green text-white flex items-center justify-center font-bold text-xs" x-text="msg.name.charAt(0)">
                                     </div>
                                     <div>
-                                        <h4 class="text-sm font-black text-sage-green uppercase tracking-wider">
-                                            {{ $msg->name }}</h4>
-                                        <span class="text-[9px] font-bold text-rose-gold uppercase tracking-widest">
-                                            {{ $msg->is_attending ? '✓ HADIR' : '✕ TIDAK HADIR' }}
-                                        </span>
+                                        <h4 class="text-sm font-black text-sage-green uppercase tracking-wider" x-text="msg.name"></h4>
+                                        <span class="text-[9px] font-bold text-rose-gold uppercase tracking-widest" x-text="msg.is_attending ? '✓ HADIR' : '✕ TIDAK HADIR'"></span>
                                     </div>
                                 </div>
-                                <p class="text-xs italic leading-relaxed text-sage-green/70">"{{ $msg->message }}"</p>
-                                <p class="text-[8px] mt-4 opacity-30 font-black uppercase">
-                                    {{ $msg->created_at->diffForHumans() }}</p>
+                                <p class="text-xs italic leading-relaxed text-sage-green/70" x-text="'\u0022' + msg.message + '\u0022'"></p>
+                                <p class="text-[8px] mt-4 opacity-30 font-black uppercase" x-text="formatTime(msg.created_at)"></p>
                             </div>
-                        @endforeach
+                        </template>
                     </div>
                 </div>
             </div>
@@ -815,6 +812,14 @@
         function themePreview() {
             return {
                 isOpen: {{ request('preview') ? 'true' : 'false' }},
+                isSending: false,
+                messageStatus: '',
+                messages: @json($messages),
+                newMessage: {
+                    name: '',
+                    message: '',
+                    is_attending: 1
+                },
                 toName: new URLSearchParams(window.location.search).get('to') || 'Tamu Undangan',
                 data: {
                     title: @json($invitation->title),
@@ -864,6 +869,44 @@
                         month: 'long',
                         year: 'numeric'
                     });
+                },
+                formatTime(date) {
+                    const d = new Date(date);
+                    return d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short' }) + ' ' + d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+                },
+                async submitMessage() {
+                    this.isSending = true;
+                    this.messageStatus = '';
+
+                    try {
+                        const response = await fetch('{{ route('invitations.message', $invitation->slug) }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                'Accept': 'application/json'
+                            },
+                            body: JSON.stringify(this.newMessage)
+                        });
+
+                        const result = await response.json();
+
+                        if (result.success) {
+                            this.messages.unshift(result.data);
+                            this.newMessage = {
+                                name: '',
+                                message: '',
+                                is_attending: 1
+                            };
+                            this.messageStatus = 'Terima kasih! Pesan Anda telah terkirim.';
+                            setTimeout(() => this.messageStatus = '', 5000);
+                        }
+                    } catch (error) {
+                        console.error('Error sending message:', error);
+                        this.messageStatus = 'Terjadi kesalahan. Silakan coba lagi.';
+                    } finally {
+                        this.isSending = false;
+                    }
                 },
                 startHeartSnow() {
                     setInterval(() => {

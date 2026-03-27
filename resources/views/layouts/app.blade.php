@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>Amora - Premium Digital Invitation</title>
+        <title>Memora By FKStudio - Premium Digital Invitation</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -73,7 +73,7 @@
                             </div>
                         @else
                             <div class="h-6 w-[1px] bg-slate-200 mx-1 md:mx-4 hidden sm:block"></div>
-                            <div class="text-[10px] md:text-xs font-black uppercase tracking-[0.2em] text-slate-400 italic">Amora Platform</div>
+                            <div class="text-[10px] md:text-xs font-black uppercase tracking-[0.2em] text-slate-400 italic">Memora By FKStudio</div>
                         @endisset
                     </div>
 
@@ -101,7 +101,7 @@
 
                 <!-- Page Content Body -->
                 <div class="flex-1 {{ $isEditor ? 'pb-0' : 'pb-24 md:pb-12' }}">
-                    <main class="{{ $isEditor ? 'py-0' : 'py-6 md:py-10' }}">
+                    <main class="{{ $isEditor ? 'py-0' : 'py-6 md:py-10 px-4 md:px-10 lg:px-12' }}">
                         {{ $slot }}
                     </main>
                 </div>
