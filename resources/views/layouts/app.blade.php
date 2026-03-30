@@ -238,6 +238,15 @@
                                 <i class="fas fa-envelope-open-text text-2xl text-[#C5A267]"></i>
                                 <span class="text-[11px] font-black uppercase tracking-widest text-white">Undangan</span>
                             </a>
+                            @php
+                                $firstInvitation = \App\Models\Invitation::where('user_id', Auth::id())->first();
+                            @endphp
+                            @if($firstInvitation)
+                            <a href="{{ route('invitations.guests', $firstInvitation) }}" class="p-6 rounded-[2rem] bg-white/5 border border-white/5 flex flex-col gap-4">
+                                <i class="fas fa-users text-2xl text-[#C5A267]"></i>
+                                <span class="text-[11px] font-black uppercase tracking-widest text-white">Daftar Tamu</span>
+                            </a>
+                            @endif
                             <a href="{{ route('packages.index') }}" class="p-6 rounded-[2rem] bg-white/5 border border-white/5 flex flex-col gap-4">
                                 <i class="fas fa-gem text-2xl text-[#C5A267]"></i>
                                 <span class="text-[11px] font-black uppercase tracking-widest text-white">Price List</span>

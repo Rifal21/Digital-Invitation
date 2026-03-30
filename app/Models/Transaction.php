@@ -20,6 +20,7 @@ class Transaction extends Model
         'invoice_number',
         'package_id',
         'payment_method_id',
+        'invitation_id',
         'subtotal',
         'admin_fee',
         'total_amount',
@@ -68,5 +69,10 @@ class Transaction extends Model
     public function destination(): BelongsTo
     {
         return $this->belongsTo(PaymentMethod::class, 'payment_method_id');
+    }
+
+    public function invitation(): BelongsTo
+    {
+        return $this->belongsTo(Invitation::class);
     }
 }

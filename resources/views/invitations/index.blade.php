@@ -86,7 +86,10 @@
                                  <!-- Action Interface -->
                                  <div class="flex items-center gap-3 border-t border-slate-50 pt-8 mt-auto">
                                      <a href="{{ route('invitations.edit', $invitation) }}" class="flex-1 text-center py-5 bg-[#0F172A] text-[#C5A267] rounded-[1.8rem] text-[10px] font-black uppercase tracking-widest shadow-2xl hover:scale-105 active:scale-95 transition-all duration-500">
-                                         Edit Creation
+                                         Edit Invite
+                                     </a>
+                                     <a href="{{ route('invitations.guests', $invitation) }}" class="flex-1 text-center py-5 bg-white border border-[#0F172A]/10 text-[#0F172A] rounded-[1.8rem] text-[10px] font-black uppercase tracking-widest hover:bg-slate-50 transition-all duration-500 shadow-sm">
+                                         Daftar Tamu
                                      </a>
                                      <div class="flex gap-2 shrink-0">
                                          <a href="{{ route('invitations.show', $invitation->slug) }}" target="_blank" class="w-14 h-14 flex items-center justify-center rounded-[1.5rem] bg-slate-50 text-slate-400 hover:bg-[#C5A267] hover:text-[#0F172A] transition duration-700 shadow-inner">

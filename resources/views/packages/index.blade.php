@@ -198,7 +198,8 @@
 
     <!-- 📱 Mobile Menu Dropdown -->
     <div x-show="mobileMenu" x-transition x-cloak
-        class="fixed inset-0 z-[250] bg-var(--memora-bg) flex flex-col pt-32 px-10" style="background: var(--memora-bg)">
+        class="fixed inset-0 z-[250] bg-var(--memora-bg) flex flex-col pt-32 px-10"
+        style="background: var(--memora-bg)">
         <div class="space-y-10">
             <a @click="mobileMenu = false" href="/#features" class="block font-serif text-[3.5rem] italic text-main">The
                 Craft</a>
@@ -213,7 +214,7 @@
     </div>
 
     <!-- 🎪 Investment Header -->
-    <header class="pt-64 pb-32 text-center relative">
+    <header class="lg:pt-64 pt-28 lg:pb-32 pb-16 text-center relative">
         <div class="max-w-5xl mx-auto px-10 relative z-10" data-aos="fade-down">
             <span class="text-gold font-black uppercase tracking-[1.5em] text-[10px] block mb-12 opacity-50">Private
                 Collection Fees</span>
@@ -263,18 +264,28 @@
                             @endforeach
                         </ul>
 
-                        <div class="w-full">
-                            @auth
-                                <a href="{{ route('packages.checkout', $package) }}"
+                        @php
+                            $checkoutUrl = route('packages.checkout', [
+                                'package' => $package->id,
+                                'invitation' => request()->invitation ?? Auth::id(),
+                            ]);
+                            // Wait, the route requires invitation ID. If not present, we might need to handle it.
+                            // Actually, I'll update the route to be optional or just handle it here.
+                        @endphp
+                        @auth
+                            @if (request()->invitation)
+                                <a href="{{ route('packages.checkout', ['package' => $package->id, 'invitation' => request()->invitation]) }}"
                                     class="elite-btn elite-btn-solid w-full !py-7 !text-[11px]">Ambil Mahakarya</a>
                             @else
-                                <a href="{{ route('register') }}"
-                                    class="elite-btn elite-btn-solid w-full !py-7 !text-[11px]">Buat Undangan</a>
-                            @endauth
-                            <p
-                                class="text-[8px] font-black uppercase tracking-[1em] text-gold mt-10 opacity-0 group-hover:opacity-20 transition-opacity">
-                                Defined by Memora</p>
-                        </div>
+                                <p class="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-4 opacity-40">
+                                    Pilih dari Dashboard</p>
+                                <a href="{{ route('dashboard') }}"
+                                    class="elite-btn w-full !py-7 !text-[11px] opacity-40">Kembali</a>
+                            @endif
+                        @else
+                            <a href="{{ route('register') }}"
+                                class="elite-btn elite-btn-solid w-full !py-7 !text-[11px]">Mulai Buat Undangan</a>
+                        @endauth
                     </div>
                 @endforeach
             </div>

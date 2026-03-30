@@ -22,35 +22,44 @@ class TransactionController extends Controller
     /**
      * Preview package before creating transaction (Cart Phase).
      */
-    public function preCheckout(Package $package)
+    public function preCheckout(Package $package, \App\Models\Invitation $invitation)
     {
+        $guestCount = $invitation->guests()->count();
         $adminFee = \App\Models\Setting::get('admin_fee', 0);
-        $total = $package->price + (int)$adminFee;
-        return view('transactions.checkout', compact('package', 'adminFee', 'total'));
+        
+        $surcharge = 0;
+        if($package->max_guests && $guestCount > $package->max_guests) {
+            $surcharge = ($guestCount - $package->max_guests) * 500; // e.g. 500 per extra guest
+        }
+
+        $total = $package->price + (int)$adminFee + $surcharge;
+        return view('transactions.checkout', compact('package', 'adminFee', 'total', 'surcharge', 'guestCount', 'invitation'));
     }
 
     /**
      * Confirm investment and create transaction record.
      */
-    public function store(Request $request, Package $package)
+    public function store(Request $request, Package $package, \App\Models\Invitation $invitation)
     {
         $request->validate([
             'payment_type' => 'required|in:auto,manual',
             'payment_method_id' => 'required_if:payment_type,manual|exists:payment_methods,id',
         ]);
 
-        // Cancel existing pending sessions for this package
-        Auth::user()->transactions()
-            ->where('package_id', $package->id)
-            ->where('status', 'pending')
-            ->update(['status' => 'cancelled']);
-
+        $guestCount = $invitation->guests()->count();
         $adminFee = \App\Models\Setting::get('admin_fee', 0);
-        $total = $package->price + (int)$adminFee;
+        
+        $surcharge = 0;
+        if($package->max_guests && $guestCount > $package->max_guests) {
+            $surcharge = ($guestCount - $package->max_guests) * 500;
+        }
+
+        $total = $package->price + (int)$adminFee + $surcharge;
         $invoiceNumber = 'INV-' . date('Ymd') . '-' . strtoupper(\Illuminate\Support\Str::random(6));
 
         $transaction = Transaction::create([
             'user_id' => Auth::id(),
+            'invitation_id' => $invitation->id,
             'invoice_number' => $invoiceNumber,
             'package_id' => $package->id,
             'subtotal' => $package->price,

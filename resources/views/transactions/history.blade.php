@@ -95,7 +95,7 @@
                                             </td>
                                             <td class="px-6 py-8 text-center">
                                                 @if ($trx->status == 'pending')
-                                                    <a href="{{ route('transactions.checkout', $trx) }}"
+                                                    <a href="{{ route('transactions.show', $trx) }}"
                                                         class="px-6 py-3 bg-[#0F172A] text-[#C5A267] rounded-xl text-[9px] font-black uppercase tracking-widest shadow-lg shadow-[#0F172A]/10 hover:bg-slate-900 transition duration-500 active:scale-95">Selesaikan</a>
                                                 @else
                                                     <span
@@ -138,7 +138,7 @@
                                                 Rp {{ number_format($trx->total_amount, 0, ',', '.') }}</h4>
                                         </div>
                                         @if ($trx->status == 'pending')
-                                            <a href="{{ route('transactions.checkout', $trx) }}"
+                                            <a href="{{ route('transactions.show', $trx) }}"
                                                 class="px-5 py-2.5 bg-[#0F172A] text-[#C5A267] rounded-xl text-[8px] font-black uppercase tracking-widest shadow-lg active:scale-95 transition">Selesaikan</a>
                                         @endif
                                     </div>

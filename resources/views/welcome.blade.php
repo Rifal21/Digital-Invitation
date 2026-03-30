@@ -252,7 +252,7 @@
                 </p>
 
                 <div class="flex flex-col sm:flex-row items-center justify-center gap-8">
-                    <a href="{{ route('register') }}"
+                    <a href="{{ route('packages.index') }}"
                         class="elite-btn elite-btn-solid !px-12 !py-6 w-full sm:w-auto">Buat Undangan</a>
                     <a href="{{ route('themes.index') }}"
                         class="group flex items-center gap-5 elite-btn elite-btn-outline !px-10 !py-6 w-full sm:w-auto">
@@ -266,7 +266,8 @@
 
     <!-- 📱 Mobile Menu Dropdown -->
     <div x-show="mobileMenu" x-transition x-cloak
-        class="fixed inset-0 z-[250] bg-var(--memora-bg) flex flex-col pt-32 px-10" style="background: var(--memora-bg)">
+        class="fixed inset-0 z-[250] bg-var(--memora-bg) flex flex-col pt-32 px-10"
+        style="background: var(--memora-bg)">
         <div class="space-y-10">
             <a @click="mobileMenu = false" href="#features" class="block font-serif text-[3.5rem] italic text-main">The
                 Craft</a>

@@ -151,12 +151,17 @@
                                  <h4 class="font-bold text-lg text-[#0F172A] mb-1 tracking-tight leading-tight group-hover:text-[#C5A267] transition duration-500">{{ $inv->title }}</h4>
                                  <p class="text-[11px] font-medium italic text-slate-400 mb-8">{{ $inv->groom_name }} & {{ $inv->bride_name }}</p>
                                  
-                                 <div class="flex gap-2">
-                                     <a href="{{ route('invitations.edit', $inv) }}" class="flex-1 text-center py-4 bg-[#0F172A] text-[#C5A267] rounded-2xl text-[9px] font-black uppercase tracking-widest shadow-xl hover:scale-105 active:scale-95 transition-all">
-                                         Kustomisasi
-                                     </a>
-                                     <a href="{{ route('invitations.show', $inv->slug) }}" target="_blank" class="w-12 h-12 flex items-center justify-center rounded-2xl bg-slate-50 text-slate-400 hover:bg-[#C5A267] hover:text-[#0F172A] transition duration-500">
-                                         <i class="fas fa-external-link-alt text-[10px]"></i>
+                                 <div class="flex flex-col gap-3">
+                                     <div class="flex gap-2">
+                                         <a href="{{ route('invitations.edit', $inv) }}" class="flex-1 text-center py-4 bg-[#0F172A] text-[#C5A267] rounded-2xl text-[9px] font-black uppercase tracking-widest shadow-xl hover:scale-105 active:scale-95 transition-all">
+                                             Editor
+                                         </a>
+                                         <a href="{{ route('invitations.guests', $inv) }}" class="flex-1 text-center py-4 border border-[#0F172A]/10 text-[#0F172A] rounded-2xl text-[9px] font-black uppercase tracking-widest hover:bg-slate-50 transition-all">
+                                            <i class="fas fa-users-line mr-2"></i> Tamu
+                                         </a>
+                                     </div>
+                                     <a href="{{ route('invitations.show', $inv->slug) }}" target="_blank" class="w-full text-center py-3 rounded-xl bg-slate-50 text-slate-400 hover:bg-[#C5A267] hover:text-[#0F172A] text-[8px] font-bold uppercase tracking-[0.3em] transition duration-500">
+                                         Pratinjau Publik <i class="fas fa-external-link-alt ml-2 opacity-50"></i>
                                      </a>
                                  </div>
                              </div>

@@ -45,7 +45,7 @@
                             <div class="w-10 h-1 bg-[#C5A267]/20 rounded-full"></div>
                         </div>
 
-                        <form id="checkout-form" action="{{ route('transactions.store', $package) }}" method="POST" @submit="confirming = true">
+                        <form id="checkout-form" action="{{ route('transactions.store', ['package' => $package->id, 'invitation' => $invitation->id]) }}" method="POST" @submit="confirming = true">
                             @csrf
                             <input type="hidden" name="payment_type" :value="payment_type">
 
@@ -187,16 +187,35 @@
                                 </ul>
                             </div>
 
-                            <div class="pt-10 border-t border-slate-50 space-y-5">
-                                <div class="flex justify-between items-center">
-                                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-300">Biaya Paket</span>
-                                    <span class="text-[12px] font-black text-slate-600">IDR {{ number_format($package->price, 0, ',', '.') }}</span>
-                                </div>
-                                <div class="flex justify-between items-center text-[#C5A267]">
-                                    <span class="text-[10px] font-black uppercase tracking-widest underline decoration-dotted">Pajak & Layanan</span>
-                                    <span class="text-[12px] font-black">IDR {{ number_format($adminFee, 0, ',', '.') }}</span>
-                                </div>
+                            <div class="px-8 py-6 space-y-4">
+                            <div class="flex justify-between items-center text-sm">
+                                <span class="text-slate-400">Total Tamu:</span>
+                                <span class="text-[#0F172A] font-black">{{ $guestCount }} Tamu</span>
                             </div>
+                            <div class="flex justify-between items-center text-sm">
+                                <span class="text-slate-400">Limit Paket:</span>
+                                <span class="text-[#0F172A] font-black">{{ $package->max_guests ?? 'Unlimited' }} Tamu</span>
+                            </div>
+
+                            <div class="h-px bg-slate-100 my-4"></div>
+
+                            <div class="flex justify-between items-center text-sm">
+                                <span class="text-slate-400">Harga Dasar:</span>
+                                <span class="text-[#0F172A] font-black">Rp {{ number_format($package->price, 0, ',', '.') }}</span>
+                            </div>
+                            
+                            @if($surcharge > 0)
+                            <div class="flex justify-between items-center text-sm text-amber-600">
+                                <span class="font-medium italic text-xs">Biaya Tambahan Tamu:</span>
+                                <span class="font-black">+ Rp {{ number_format($surcharge, 0, ',', '.') }}</span>
+                            </div>
+                            @endif
+
+                             <div class="flex justify-between items-center text-sm">
+                                <span class="text-slate-400">Biaya Admin:</span>
+                                <span class="text-[#0F172A] font-black">Rp {{ number_format($adminFee, 0, ',', '.') }}</span>
+                            </div>
+                        </div>
                         </div>
 
                         <!-- Price summary (Visible on both desktop summary inside, or mobile separate) -->

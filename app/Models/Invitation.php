@@ -45,6 +45,11 @@ class Invitation extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function guests(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Guest::class);
+    }
+
     public function messages(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(InvitationMessage::class);

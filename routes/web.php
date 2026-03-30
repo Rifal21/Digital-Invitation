@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InvitationController;
+use App\Http\Controllers\GuestController;
 use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\TransactionController;
@@ -28,6 +29,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/messages/{message}', [InvitationController::class, 'destroyMessage'])->name('messages.destroy');
     Route::post('/invitations/{invitation}/upload', [InvitationController::class, 'upload'])->name('invitations.upload');
     Route::match(['post', 'patch'], '/invitations/{invitation}/save', [InvitationController::class, 'save'])->name('invitations.save');
+    Route::get('/invitations/{invitation}/guests', [InvitationController::class, 'guests'])->name('invitations.guests');
+    Route::post('/invitations/{invitation}/guests', [GuestController::class, 'store'])->name('guests.store');
+    Route::post('/invitations/{invitation}/guests/import', [GuestController::class, 'import'])->name('guests.import');
+    Route::get('/guests/template', [GuestController::class, 'downloadTemplate'])->name('guests.template');
+    Route::patch('/guests/{guest}', [GuestController::class, 'update'])->name('guests.update');
+    Route::delete('/guests/{guest}', [GuestController::class, 'destroy'])->name('guests.destroy');
 
     // Themes & Packages
     Route::get('/themes', [ThemeController::class, 'index'])->name('themes.index');
@@ -36,10 +43,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/packages', [PackageController::class, 'index'])->name('packages.index');
 
     // Transactions / Checkout Flow (Universal Mapping)
-    Route::get('/checkout/{package:id}', [TransactionController::class, 'preCheckout'])->name('packages.checkout');
-    Route::get('/checkout-intent/{package:id}', [TransactionController::class, 'preCheckout'])->name('transactions.checkout'); // Alias to prevent errors
+    Route::get('/checkout/{package:id}/{invitation:id}', [TransactionController::class, 'preCheckout'])->name('packages.checkout');
+    Route::get('/checkout-intent/{package:id}/{invitation:id}', [TransactionController::class, 'preCheckout'])->name('transactions.checkout'); // Alias to prevent errors
     
-    Route::post('/checkout/{package:id}', [TransactionController::class, 'store'])->name('transactions.store');
+    Route::post('/checkout/{package:id}/{invitation:id}', [TransactionController::class, 'store'])->name('transactions.store');
     
     Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.history');
     Route::get('/transactions/{transaction:id}', [TransactionController::class, 'show'])->name('transactions.show');

@@ -224,4 +224,31 @@ class InvitationController extends Controller
         $message->delete();
         return back()->with('success', 'Pesan berhasil dihapus!');
     }
+
+    public function guests(Request $request, Invitation $invitation)
+    {
+        if ($invitation->user_id !== \Illuminate\Support\Facades\Auth::id()) {
+            abort(403);
+        }
+
+        $search = $request->input('search');
+        
+        $query = $invitation->guests()->latest();
+
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('phone', 'like', "%{$search}%")
+                  ->orWhere('group', 'like', "%{$search}%");
+            });
+        }
+
+        $invitation->getGuests = $query->paginate(9)->withQueryString();
+        
+        if ($request->ajax()) {
+            return view('invitations.partials.guest-list', compact('invitation', 'search'))->render();
+        }
+
+        return view('invitations.guests', compact('invitation', 'search'));
+    }
 }
