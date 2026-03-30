@@ -57,8 +57,8 @@ class TransactionController extends Controller
             'admin_fee' => $adminFee,
             'total_amount' => $total,
             'status' => 'pending',
-            'payment_method' => $request->payment_type == 'auto' ? 'DOKU' : PaymentMethod::find($request->payment_method_id)->name,
-            'payment_method_id' => $request->payment_method_id, // If you have this column or use response_payload to store it
+            'payment_method' => $request->payment_type == 'auto' ? 'Xendit' : PaymentMethod::find($request->payment_method_id)->name,
+            'payment_method_id' => $request->payment_method_id,
         ]);
 
         // If manual, redirect to show for immediate payment details & upload
@@ -67,8 +67,8 @@ class TransactionController extends Controller
                 ->with('success', 'Pesanan berhasil dibuat. Silakan selesaikan pembayaran.');
         }
 
-        // If auto, go to DOKU
-        return $this->payWithDoku($transaction, new \App\Services\DokuService());
+        // If auto, go to Xendit
+        return $this->payWithXendit($transaction, new \App\Services\XenditService());
     }
 
     /**
@@ -111,31 +111,29 @@ class TransactionController extends Controller
     }
 
     /**
-     * Redirect to DOKU Payment Gateway
+     * Redirect to Xendit Payment Gateway
      */
-    public function payWithDoku(Transaction $transaction, \App\Services\DokuService $dokuService)
+    public function payWithXendit(Transaction $transaction, \App\Services\XenditService $xenditService)
     {
         try {
             if ($transaction->user_id !== Auth::id()) {
                 abort(403);
             }
 
-            $checkout = $dokuService->createCheckout($transaction);
-            
-            // Save Doku Audit Trail
-            $transaction->update([
-                'payment_url' => $checkout['response']['payment']['url'] ?? null,
-                'response_payload' => $checkout,
-            ]);
+            $invoice = $xenditService->createInvoice($transaction);
 
-            if (isset($checkout['response']['payment']['url'])) {
-                return redirect($checkout['response']['payment']['url']);
+            if ($invoice['success']) {
+                $transaction->update([
+                    'payment_url' => $invoice['invoice_url']
+                ]);
+
+                return redirect($invoice['invoice_url']);
             }
 
-            return redirect()->route('transactions.history')->with('error', 'Gagal membuat sesi Doku: ' . ($checkout['message'] ?? 'Unknown Error'));
+            return redirect()->route('transactions.history')->with('error', 'Gagal membuat invoice Xendit: ' . ($invoice['error'] ?? 'Unknown Error'));
         } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error('Doku Error: ' . $e->getMessage());
-            return redirect()->route('transactions.history')->with('error', 'Doku Error: ' . $e->getMessage());
+            \Illuminate\Support\Facades\Log::error('Xendit Error: ' . $e->getMessage());
+            return redirect()->route('transactions.history')->with('error', 'Xendit Error: ' . $e->getMessage());
         }
     }
 }

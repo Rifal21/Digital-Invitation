@@ -17,7 +17,7 @@ class PackageSeeder extends Seeder
             [
                 'name' => 'Paket Digital Invitation',
                 'price' => 50000,
-                'description' => 'Akses penuh ke semua tema undangan digital premium Amora.',
+                'description' => 'Akses penuh ke semua tema undangan digital premium Memora.',
                 'features' => [
                     'Semua Tema Premium',
                     'Smooth Scrolling & Animasi',

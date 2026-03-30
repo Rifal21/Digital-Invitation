@@ -14,7 +14,7 @@
                             <span
                                 class="text-[8px] md:text-[9px] font-black text-rose-500 uppercase tracking-[0.6em] mb-2 block">My
                                 Transactions</span>
-                            <h4 class="text-2xl md:text-3xl font-serif font-black text-[#4D243D]">Daftar Pesanan Saya
+                            <h4 class="text-2xl md:text-3xl font-serif font-black text-[#0F172A]">Daftar Pesanan Saya
                             </h4>
                         </div>
                         <div class="hidden md:block">
@@ -28,7 +28,7 @@
                             <p class="text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-[0.4em]">
                                 Belum ada pesanan yang ditemukan</p>
                             <a href="{{ route('packages.index') }}"
-                                class="mt-8 inline-block px-8 py-4 bg-[#4D243D] text-[#EDD4B2] rounded-2xl text-[9px] font-black uppercase tracking-widest shadow-xl hover:bg-slate-900 transition active:scale-95">Lihat
+                                class="mt-8 inline-block px-8 py-4 bg-[#0F172A] text-[#C5A267] rounded-2xl text-[9px] font-black uppercase tracking-widest shadow-xl hover:bg-slate-900 transition active:scale-95">Lihat
                                 Paket</a>
                         </div>
                     @else
@@ -50,13 +50,13 @@
                                         <tr class="group hover:bg-slate-50/50 transition duration-300">
                                             <td class="px-6 py-8 text-left">
                                                 {{-- <p class="text-[8px] font-black text-slate-300 uppercase tracking-widest leading-none mb-1">TRX-</p> --}}
-                                                <p class="text-xs font-bold text-[#4D243D] tracking-tighter">
+                                                <p class="text-xs font-bold text-[#0F172A] tracking-tighter">
                                                     {{ $trx->invoice_number }}</p>
                                             </td>
                                             <td class="px-6 py-8 text-left">
                                                 <div class="flex flex-col">
                                                     <span
-                                                        class="text-sm font-serif font-black text-[#4D243D] italic mb-1 uppercase tracking-tighter">{{ $trx->package->name }}</span>
+                                                        class="text-sm font-serif font-black text-[#0F172A] italic mb-1 uppercase tracking-tighter">{{ $trx->package->name }}</span>
                                                     <span
                                                         class="text-[8px] font-black text-slate-300 uppercase tracking-widest">{{ $trx->created_at->format('d M Y, H:i') }}</span>
                                                 </div>
@@ -73,7 +73,7 @@
                                                     </div>
                                                     <div class="flex justify-between items-end">
                                                         <span
-                                                            class="text-[9px] font-black text-[#4D243D] uppercase tracking-widest">TOTAL</span>
+                                                            class="text-[9px] font-black text-[#0F172A] uppercase tracking-widest">TOTAL</span>
                                                         <h5
                                                             class="text-lg font-serif font-black text-rose-500 italic tracking-tighter leading-none">
                                                             Rp {{ number_format($trx->total_amount, 0, ',', '.') }}</h5>
@@ -96,7 +96,7 @@
                                             <td class="px-6 py-8 text-center">
                                                 @if ($trx->status == 'pending')
                                                     <a href="{{ route('transactions.checkout', $trx) }}"
-                                                        class="px-6 py-3 bg-[#4D243D] text-[#EDD4B2] rounded-xl text-[9px] font-black uppercase tracking-widest shadow-lg shadow-[#4D243D]/10 hover:bg-slate-900 transition duration-500 active:scale-95">Selesaikan</a>
+                                                        class="px-6 py-3 bg-[#0F172A] text-[#C5A267] rounded-xl text-[9px] font-black uppercase tracking-widest shadow-lg shadow-[#0F172A]/10 hover:bg-slate-900 transition duration-500 active:scale-95">Selesaikan</a>
                                                 @else
                                                     <span
                                                         class="text-[9px] font-black text-slate-300 uppercase italic tracking-widest">Done</span>
@@ -119,7 +119,7 @@
                                                 class="text-[8px] font-black text-slate-300 uppercase tracking-widest mb-1 leading-none">
                                                 TRX-{{ substr($trx->id, 0, 8) }}</p>
                                             <h5
-                                                class="text-md font-serif font-black text-[#4D243D] uppercase tracking-tighter italic">
+                                                class="text-md font-serif font-black text-[#0F172A] uppercase tracking-tighter italic">
                                                 {{ $trx->package->name }}</h5>
                                             <p class="text-[8px] font-bold text-slate-400 mt-0.5">
                                                 {{ $trx->created_at->format('d M Y, H:i') }}</p>
@@ -139,7 +139,7 @@
                                         </div>
                                         @if ($trx->status == 'pending')
                                             <a href="{{ route('transactions.checkout', $trx) }}"
-                                                class="px-5 py-2.5 bg-[#4D243D] text-[#EDD4B2] rounded-xl text-[8px] font-black uppercase tracking-widest shadow-lg active:scale-95 transition">Selesaikan</a>
+                                                class="px-5 py-2.5 bg-[#0F172A] text-[#C5A267] rounded-xl text-[8px] font-black uppercase tracking-widest shadow-lg active:scale-95 transition">Selesaikan</a>
                                         @endif
                                     </div>
                                 </div>

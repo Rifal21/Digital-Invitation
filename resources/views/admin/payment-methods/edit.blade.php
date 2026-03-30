@@ -10,7 +10,7 @@
                     
                     <div class="mb-10 pb-6 border-b border-slate-50">
                         <span class="text-[9px] font-black text-rose-500 uppercase tracking-[0.6em] mb-2 block">Provider Management</span>
-                        <h4 class="text-3xl font-serif font-black text-[#4D243D]">Ubah Data</h4>
+                        <h4 class="text-3xl font-serif font-black text-[#0F172A]">Ubah Data</h4>
                     </div>
 
                     <form method="POST" action="{{ route('admin.payment-methods.update', $paymentMethod) }}" enctype="multipart/form-data" class="space-y-8">
@@ -19,17 +19,17 @@
                         
                         <div class="space-y-3">
                             <label class="text-[9px] font-black uppercase tracking-[0.2em] text-slate-400">Provider Name</label>
-                            <input type="text" name="name" value="{{ $paymentMethod->name }}" class="w-full px-6 py-4 rounded-xl border border-slate-100 bg-slate-50 text-[11px] font-bold text-[#4D243D] focus:ring-2 focus:ring-[#EDD4B2] focus:border-[#EDD4B2]" required>
+                            <input type="text" name="name" value="{{ $paymentMethod->name }}" class="w-full px-6 py-4 rounded-xl border border-slate-100 bg-slate-50 text-[11px] font-bold text-[#0F172A] focus:ring-2 focus:ring-[#C5A267] focus:border-[#C5A267]" required>
                         </div>
 
                         <div class="space-y-3">
                             <label class="text-[9px] font-black uppercase tracking-[0.2em] text-slate-400">Account Number (Opsional)</label>
-                            <input type="text" name="account_number" value="{{ $paymentMethod->account_number }}" class="w-full px-6 py-4 rounded-xl border border-slate-100 bg-slate-50 text-[11px] font-bold text-[#4D243D] focus:ring-2 focus:ring-[#EDD4B2] focus:border-[#EDD4B2]">
+                            <input type="text" name="account_number" value="{{ $paymentMethod->account_number }}" class="w-full px-6 py-4 rounded-xl border border-slate-100 bg-slate-50 text-[11px] font-bold text-[#0F172A] focus:ring-2 focus:ring-[#C5A267] focus:border-[#C5A267]">
                         </div>
 
                         <div class="space-y-3">
                             <label class="text-[9px] font-black uppercase tracking-[0.2em] text-slate-400">Account Holder Name (Opsional)</label>
-                            <input type="text" name="account_name" value="{{ $paymentMethod->account_name }}" class="w-full px-6 py-4 rounded-xl border border-slate-100 bg-slate-50 text-[11px] font-bold text-[#4D243D] focus:ring-2 focus:ring-[#EDD4B2] focus:border-[#EDD4B2]">
+                            <input type="text" name="account_name" value="{{ $paymentMethod->account_name }}" class="w-full px-6 py-4 rounded-xl border border-slate-100 bg-slate-50 text-[11px] font-bold text-[#0F172A] focus:ring-2 focus:ring-[#C5A267] focus:border-[#C5A267]">
                         </div>
 
                         <div class="grid grid-cols-2 gap-8 items-center pt-6">
@@ -53,7 +53,7 @@
                         </div>
 
                         <div class="pt-6">
-                            <button type="submit" class="w-full py-6 rounded-2xl bg-[#4D243D] text-[#EDD4B2] font-black text-xs uppercase tracking-[0.4em] shadow-[0_15px_30px_rgba(77,36,61,0.2)] hover:bg-slate-900 transition-all duration-500 active:scale-95">
+                            <button type="submit" class="w-full py-6 rounded-2xl bg-[#0F172A] text-[#C5A267] font-black text-xs uppercase tracking-[0.4em] shadow-[0_15px_30px_rgba(77,36,61,0.2)] hover:bg-slate-900 transition-all duration-500 active:scale-95">
                                 Perbarui & Simpan
                             </button>
                             <a href="{{ route('admin.payment-methods.index') }}" class="block text-center mt-6 text-[9px] font-black uppercase tracking-widest text-slate-300 hover:text-slate-500 transition">Batal</a>

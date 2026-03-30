@@ -15,28 +15,29 @@
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    @PwaHead
 
     <style>
         :root {
-            --amora-bg: #FDFCFB;
-            --amora-text: #0F172A;
-            --amora-gold: #C5A267;
+            --memora-bg: #FDFCFB;
+            --memora-text: #0F172A;
+            --memora-gold: #C5A267;
             --nav-bg: rgba(253, 252, 251, 0.85);
             --hero-overlay: rgba(253, 252, 251, 0.55);
         }
 
         .dark {
-            --amora-bg: #0F172A;
-            --amora-text: #F8FAFC;
-            --amora-gold: #C5A267;
+            --memora-bg: #0F172A;
+            --memora-text: #F8FAFC;
+            --memora-gold: #C5A267;
             --nav-bg: rgba(15, 23, 42, 0.88);
             --hero-overlay: rgba(15, 23, 42, 0.75);
         }
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: var(--amora-bg);
-            color: var(--amora-text);
+            background-color: var(--memora-bg);
+            color: var(--memora-text);
             overflow-x: hidden;
             transition: background-color 0.8s ease;
         }
@@ -109,28 +110,28 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            border: 1px solid var(--amora-gold);
+            border: 1px solid var(--memora-gold);
         }
 
         .elite-btn-solid {
-            background-color: var(--amora-gold);
-            color: var(--amora-bg);
+            background-color: var(--memora-gold);
+            color: var(--memora-bg);
         }
 
         .elite-btn-solid:hover {
-            background-color: var(--amora-text);
-            border-color: var(--amora-text);
+            background-color: var(--memora-text);
+            border-color: var(--memora-text);
             transform: translateY(-5px);
         }
 
         .elite-btn-outline {
             background-color: transparent;
-            color: var(--amora-text);
+            color: var(--memora-text);
             border: 1px solid rgba(197, 162, 103, 0.4);
         }
 
         .elite-btn-outline:hover {
-            border-color: var(--amora-gold);
+            border-color: var(--memora-gold);
             transform: translateY(-5px);
         }
 
@@ -139,7 +140,7 @@
         }
 
         .shimmer-text {
-            background: linear-gradient(90deg, var(--amora-text), var(--amora-gold), var(--amora-text));
+            background: linear-gradient(90deg, var(--memora-text), var(--memora-gold), var(--memora-text));
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -160,8 +161,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--amora-gold);
-            background: var(--amora-bg);
+            color: var(--memora-gold);
+            background: var(--memora-bg);
         }
 
         [x-cloak] {
@@ -170,7 +171,7 @@
     </style>
 </head>
 
-<body class="antialiased selection:bg-amora-gold selection:text-white overflow-x-hidden"
+<body class="antialiased selection:bg-memora-gold selection:text-white overflow-x-hidden"
     :class="{ 'overflow-hidden': mobileMenu }">
 
     @php
@@ -189,7 +190,7 @@
         :class="{ 'py-3': scrolled || mobileMenu }">
         <a href="/" class="flex items-center gap-4 group">
             <div class="hover:rotate-[180deg] transition-transform duration-1000">
-                <span class="font-serif text-2xl font-black italic text-amora-gold">M.</span>
+                <span class="font-serif text-2xl font-black italic text-memora-gold">M.</span>
             </div>
             <div class="hidden sm:block">
                 <span
@@ -265,7 +266,7 @@
 
     <!-- 📱 Mobile Menu Dropdown -->
     <div x-show="mobileMenu" x-transition x-cloak
-        class="fixed inset-0 z-[250] bg-var(--amora-bg) flex flex-col pt-32 px-10" style="background: var(--amora-bg)">
+        class="fixed inset-0 z-[250] bg-var(--memora-bg) flex flex-col pt-32 px-10" style="background: var(--memora-bg)">
         <div class="space-y-10">
             <a @click="mobileMenu = false" href="#features" class="block font-serif text-[3.5rem] italic text-main">The
                 Craft</a>
@@ -363,7 +364,7 @@
     <!-- 🏺 Footer -->
     <footer class="py-32 border-t border-white/5 relative z-10 text-center">
         <div class="max-w-6xl mx-auto px-10">
-            <a href="/" class="font-serif text-4xl font-black italic text-amora-gold mb-16 block">M.</a>
+            <a href="/" class="font-serif text-4xl font-black italic text-memora-gold mb-16 block">M.</a>
             <p class="text-muted text-lg italic leading-loose max-w-2xl mx-auto font-medium opacity-50 mb-16">
                 Mengabadikan sakralitas janji suci melalui Kurasi Undangan Digital & Buku Tamu Digital Eksklusif oleh
                 FKStudio.</p>
@@ -403,6 +404,7 @@
             },
         });
     </script>
+    @RegisterServiceWorkerScript
 </body>
 
 </html>

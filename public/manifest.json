@@ -1,0 +1,16 @@
+{
+    "name": "Memora - Premium Digital Invitation",
+    "short_name": "Memora",
+    "background_color": "#0F172A",
+    "display": "standalone",
+    "description": "Pusat Otoritas Desain Undangan Digital Eksklusif by FKStudio.",
+    "theme_color": "#C5A267",
+    "start_url": "/",
+    "icons": [
+        {
+            "src": "logo.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

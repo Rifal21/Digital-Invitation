@@ -10,3 +10,4 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::post('/doku/notification', DokuNotificationController::class)->name('api.doku.notification');
+Route::post('/xendit/webhook', [\App\Http\Controllers\Api\XenditWebhookController::class, 'handle'])->name('api.xendit.webhook');

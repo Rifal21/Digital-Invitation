@@ -15,21 +15,21 @@ class PaymentMethodSeeder extends Seeder
         PaymentMethod::create([
             'name' => 'Bank BCA',
             'account_number' => '1234567890',
-            'account_name' => 'Amora Studio Digital',
+            'account_name' => 'Memora Studio Digital',
             'is_active' => true,
         ]);
 
         PaymentMethod::create([
             'name' => 'DANA',
             'account_number' => '0812-3456-7890',
-            'account_name' => 'Amora Studio Digital',
+            'account_name' => 'Memora Studio Digital',
             'is_active' => true,
         ]);
 
         PaymentMethod::create([
             'name' => 'Bank Mandiri',
             'account_number' => '9876543210',
-            'account_name' => 'Amora Studio Digital',
+            'account_name' => 'Memora Studio Digital',
             'is_active' => true,
         ]);
 

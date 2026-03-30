@@ -57,7 +57,7 @@
                                             </button>
                                         </form>
                                     </div>
-                                    <a href="{{ route('themes.preview', $theme->slug) }}" target="_blank" class="text-[10px] font-bold uppercase tracking-widest text-[#4D243D] hover:underline">
+                                    <a href="{{ route('themes.preview', $theme->slug) }}" target="_blank" class="text-[10px] font-bold uppercase tracking-widest text-[#0F172A] hover:underline">
                                         Pratinjau Live →
                                     </a>
                                 </div>
