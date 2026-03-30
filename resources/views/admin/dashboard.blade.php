@@ -12,7 +12,7 @@
                     <div class="absolute -right-8 -top-8 w-32 h-32 bg-indigo-50/50 rounded-full blur-2xl group-hover:bg-indigo-100 transition duration-700"></div>
                     <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.4em] mb-4">Market Share</p>
                     <div class="flex items-baseline gap-2">
-                        <h3 class="text-6xl font-serif font-black text-[#4D243D] tracking-tighter">{{ $stats['users'] }}</h3>
+                        <h3 class="text-6xl font-serif font-black text-[#0F172A] tracking-tighter">{{ $stats['users'] }}</h3>
                         <span class="text-slate-400 font-bold italic">Total Pengguna</span>
                     </div>
                 </div>
@@ -21,7 +21,7 @@
                     <div class="absolute -right-8 -top-8 w-32 h-32 bg-emerald-50/50 rounded-full blur-2xl group-hover:bg-emerald-100 transition duration-700"></div>
                     <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.4em] mb-4">Total Production</p>
                     <div class="flex items-baseline gap-2">
-                        <h3 class="text-6xl font-serif font-black text-[#4D243D] tracking-tighter">{{ $stats['invitations'] }}</h3>
+                        <h3 class="text-6xl font-serif font-black text-[#0F172A] tracking-tighter">{{ $stats['invitations'] }}</h3>
                         <span class="text-slate-400 font-bold italic">Undangan Terbit</span>
                     </div>
                 </div>
@@ -33,9 +33,9 @@
                     <div class="flex justify-between items-end mb-10 pb-6 border-b border-slate-50">
                         <div>
                             <span class="text-[9px] font-black text-indigo-500 uppercase tracking-[0.6em] mb-2 block">Real-time Stream</span>
-                            <h4 class="text-3xl font-serif font-black text-[#4D243D]">Undangan Terbaru</h4>
+                            <h4 class="text-3xl font-serif font-black text-[#0F172A]">Undangan Terbaru</h4>
                         </div>
-                        <a href="{{ route('admin.invitations.index') }}" class="text-[10px] font-black text-[#4D243D]/40 uppercase tracking-widest hover:text-[#4D243D] transition border-b-2 border-transparent hover:border-[#4D243D]/20 pb-1">Review All Records →</a>
+                        <a href="{{ route('admin.invitations.index') }}" class="text-[10px] font-black text-[#0F172A]/40 uppercase tracking-widest hover:text-[#0F172A] transition border-b-2 border-transparent hover:border-[#0F172A]/20 pb-1">Review All Records →</a>
                     </div>
                     
                     <div class="overflow-x-auto">
@@ -51,10 +51,10 @@
                             <tbody class="divide-y divide-slate-50">
                                 @foreach($latest_invitations as $inv)
                                     <tr class="group hover:bg-slate-50/50 transition duration-300">
-                                        <td class="px-6 py-8 text-sm font-bold text-[#4D243D] italic tracking-tight">{{ $inv->title }}</td>
+                                        <td class="px-6 py-8 text-sm font-bold text-[#0F172A] italic tracking-tight">{{ $inv->title }}</td>
                                         <td class="px-6 py-8 text-xs font-medium text-slate-600 uppercase tracking-widest">{{ $inv->user->name }}</td>
                                         <td class="px-6 py-8">
-                                            <span class="px-4 py-1.5 rounded-full bg-slate-100 text-[#4D243D]/60 text-[9px] font-black uppercase tracking-widest group-hover:bg-white group-hover:shadow-sm transition duration-500">{{ $inv->theme ?? 'Default' }}</span>
+                                            <span class="px-4 py-1.5 rounded-full bg-slate-100 text-[#0F172A]/60 text-[9px] font-black uppercase tracking-widest group-hover:bg-white group-hover:shadow-sm transition duration-500">{{ $inv->theme ?? 'Default' }}</span>
                                         </td>
                                         <td class="px-6 py-8 text-xs text-slate-400 font-bold uppercase tracking-widest">{{ $inv->created_at->format('d M Y') }}</td>
                                     </tr>

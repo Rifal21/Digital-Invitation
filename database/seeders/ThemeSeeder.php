@@ -15,10 +15,10 @@ class ThemeSeeder extends Seeder
         $themes = [
             [
                 'slug' => 'modern',
-                'name' => 'Amora Modern',
+                'name' => 'Memora Modern',
                 'description' => 'Elegan, Bersih, dan Berkelas.',
                 'tag' => 'Premium',
-                'color' => '#4D243D'
+                'color' => '#0F172A'
             ],
             [
                 'slug' => 'minimalist',
@@ -46,7 +46,7 @@ class ThemeSeeder extends Seeder
                 'name' => 'Ethereal Garden',
                 'description' => 'Pengalaman magis dengan animasi penuh.',
                 'tag' => 'Premium+',
-                'color' => '#4D243D'
+                'color' => '#0F172A'
             ],
             [
                 'slug' => 'sage-organic',

@@ -23,8 +23,8 @@ class DatabaseSeeder extends Seeder
 
         // Secondary Admin
         User::create([
-            'name' => 'Admin Amora',
-            'email' => 'admin@amora.com',
+            'name' => 'Admin Memora',
+            'email' => 'admin@memora.com',
             'password' => Hash::make('password'),
             'role' => 'admin',
         ]);

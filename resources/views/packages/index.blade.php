@@ -16,25 +16,25 @@
 
     <style>
         :root {
-            --amora-bg: #FDFCFB;
-            --amora-text: #0F172A;
-            --amora-gold: #C5A267;
+            --memora-bg: #FDFCFB;
+            --memora-text: #0F172A;
+            --memora-gold: #C5A267;
             --nav-bg: rgba(253, 252, 251, 0.85);
             --card-surface: rgba(255, 255, 255, 0.4);
         }
 
         .dark {
-            --amora-bg: #0F172A;
-            --amora-text: #F8FAFC;
-            --amora-gold: #C5A267;
+            --memora-bg: #0F172A;
+            --memora-text: #F8FAFC;
+            --memora-gold: #C5A267;
             --nav-bg: rgba(15, 23, 42, 0.88);
             --card-surface: rgba(30, 41, 59, 0.3);
         }
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: var(--amora-bg);
-            color: var(--amora-text);
+            background-color: var(--memora-bg);
+            color: var(--memora-text);
             overflow-x: hidden;
             transition: background-color 1s cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -100,23 +100,23 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            border: 1px solid var(--amora-gold);
+            border: 1px solid var(--memora-gold);
         }
 
         .elite-btn-solid {
-            background-color: var(--amora-gold);
-            color: var(--amora-bg);
+            background-color: var(--memora-gold);
+            color: var(--memora-bg);
         }
 
         .elite-btn-solid:hover {
-            background-color: var(--amora-text);
-            border-color: var(--amora-text);
+            background-color: var(--memora-text);
+            border-color: var(--memora-text);
             transform: translateY(-5px);
         }
 
         .choice-badge {
-            background: linear-gradient(135deg, var(--amora-gold), #e7c68a);
-            color: var(--amora-bg);
+            background: linear-gradient(135deg, var(--memora-gold), #e7c68a);
+            color: var(--memora-bg);
             padding: 0.5rem 1.8rem;
             border-radius: 9999px;
             font-size: 7px;
@@ -131,7 +131,7 @@
         }
 
         .shimmer-text {
-            background: linear-gradient(90deg, var(--amora-text), var(--amora-gold), var(--amora-text));
+            background: linear-gradient(90deg, var(--memora-text), var(--memora-gold), var(--memora-text));
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -152,8 +152,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--amora-gold);
-            background: var(--amora-bg);
+            color: var(--memora-gold);
+            background: var(--memora-bg);
         }
 
         [x-cloak] {
@@ -162,14 +162,14 @@
     </style>
 </head>
 
-<body class="antialiased selection:bg-amora-gold selection:text-white" :class="{ 'overflow-hidden': mobileMenu }">
+<body class="antialiased selection:bg-memora-gold selection:text-white" :class="{ 'overflow-hidden': mobileMenu }">
 
     <!-- 💍 Navigation (Synchronized with Welcome) -->
     <nav class="fixed top-0 left-0 right-0 z-[300] h-20 md:h-24 glass-nav flex justify-between items-center px-6 md:px-20 transition-all duration-700"
         :class="{ 'py-3': scrolled || mobileMenu }">
         <a href="/" class="flex items-center gap-4 group">
             <div class="hover:rotate-[180deg] transition-transform duration-1000">
-                <span class="font-serif text-2xl font-black italic text-amora-gold">M.</span>
+                <span class="font-serif text-2xl font-black italic text-memora-gold">M.</span>
             </div>
             <div class="hidden sm:block">
                 <span
@@ -198,7 +198,7 @@
 
     <!-- 📱 Mobile Menu Dropdown -->
     <div x-show="mobileMenu" x-transition x-cloak
-        class="fixed inset-0 z-[250] bg-var(--amora-bg) flex flex-col pt-32 px-10" style="background: var(--amora-bg)">
+        class="fixed inset-0 z-[250] bg-var(--memora-bg) flex flex-col pt-32 px-10" style="background: var(--memora-bg)">
         <div class="space-y-10">
             <a @click="mobileMenu = false" href="/#features" class="block font-serif text-[3.5rem] italic text-main">The
                 Craft</a>
@@ -286,7 +286,7 @@
         <div class="max-w-6xl mx-auto px-10">
             <div
                 class="w-16 h-16 bg-gold/5 border border-gold/10 rounded-[2.5rem] flex items-center justify-center mx-auto mb-16 shadow-2xl transition hover:rotate-45">
-                <span class="font-serif text-3xl font-black italic text-amora-gold">M</span>
+                <span class="font-serif text-3xl font-black italic text-memora-gold">M</span>
             </div>
             <p class="text-muted text-lg italic leading-loose max-w-xl mx-auto font-medium opacity-30 mb-20">© 2026
                 Memora by FKStudio. Defined by Excellence.</p>

@@ -11,7 +11,7 @@
                     <div class="mb-10 flex justify-between items-end border-b border-slate-50 pb-6">
                         <div>
                              <span class="text-[9px] font-black text-indigo-500 uppercase tracking-[0.6em] mb-2 block">Financial Ops</span>
-                             <h4 class="text-3xl font-serif font-black text-[#4D243D]">Daftar Transaksi</h4>
+                             <h4 class="text-3xl font-serif font-black text-[#0F172A]">Daftar Transaksi</h4>
                         </div>
                     </div>
 
@@ -31,7 +31,7 @@
                                     <tr class="group hover:bg-slate-50/50 transition duration-300">
                                         <td class="px-6 py-8">
                                             <div class="flex flex-col">
-                                                <span class="text-sm font-black text-[#4D243D] mb-1 italic">{{ $trx->user->name }}</span>
+                                                <span class="text-sm font-black text-[#0F172A] mb-1 italic">{{ $trx->user->name }}</span>
                                                 <span class="text-[8px] font-black text-slate-300 uppercase tracking-widest">{{ $trx->package->name }}</span>
                                             </div>
                                         </td>
@@ -46,7 +46,7 @@
                                                     <span class="text-[10px] font-bold text-slate-600 italic">Rp {{ number_format($trx->admin_fee, 0, ',', '.') }}</span>
                                                 </div>
                                                 <div class="flex justify-between w-32 pt-1">
-                                                    <span class="text-[9px] font-black text-[#4D243D] uppercase">Total</span>
+                                                    <span class="text-[9px] font-black text-[#0F172A] uppercase">Total</span>
                                                     <span class="text-sm font-black text-rose-500 italic">Rp {{ number_format($trx->total_amount, 0, ',', '.') }}</span>
                                                 </div>
                                             </div>

@@ -8,7 +8,7 @@
                 </a>
                 <div>
                     <h1 class="text-xs font-black text-rose-500 uppercase tracking-[0.4em] leading-none mb-1">Live Editor</h1>
-                    <p class="text-sm font-serif font-black text-[#EDD4B2] italic leading-none" x-text="form.title"></p>
+                    <p class="text-sm font-serif font-black text-[#C5A267] italic leading-none" x-text="form.title"></p>
                 </div>
             </div>
             

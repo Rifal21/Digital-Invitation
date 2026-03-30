@@ -44,7 +44,7 @@
                         </div>
                         <div>
                             <label for="color" class="block text-sm font-medium text-gray-700 font-bold mb-1 italic">Aksen Warna Utama</label>
-                            <input type="color" name="color" id="color" value="{{ old('color', '#4D243D') }}" class="h-10 w-full border-gray-300 rounded-md shadow-sm cursor-pointer p-1">
+                            <input type="color" name="color" id="color" value="{{ old('color', '#0F172A') }}" class="h-10 w-full border-gray-300 rounded-md shadow-sm cursor-pointer p-1">
                             @error('color') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                         </div>
                     </div>
